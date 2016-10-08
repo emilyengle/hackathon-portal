@@ -7,12 +7,12 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_user
-    flash[:error] = "You must login to view this page."
+    flash[:error] = "You must login to view this page." unless current_user
     redirect_to login_path unless current_user
   end
 
   def authorize_admin
-    flash[:error] = "You must be an admin to view this page."
+    flash[:error] = "You must be an admin to view this page." unless current_user.admin?
     redirect_to login_path unless current_user.admin?
   end
 
