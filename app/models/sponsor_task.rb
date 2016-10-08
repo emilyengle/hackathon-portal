@@ -1,4 +1,4 @@
 class SponsorTask < ApplicationRecord
-	belongs_to :task
-	belongs_to :sponsor
+  belongs_to :task
+  belongs_to :sponsor
 end
