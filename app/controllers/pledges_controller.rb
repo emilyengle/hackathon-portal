@@ -49,4 +49,13 @@ class PledgesController < ApplicationController
       render :index
     end 
   end
+
+  private 
+  def create_params
+    params.require(:sponsor).permit(:level, :pledge_type, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received)
+  end
+  
+  def update_params
+    create_params 
+  end
 end
