@@ -4,6 +4,7 @@ class Sponsor < ApplicationRecord
 
 
   has_many :pledges, :dependent => :destroy
+  accepts_nested_attributes_for :pledges, :allow_destroy => true
   validates :name, :presence => true
   validates :registration_password, :presence => true
 
