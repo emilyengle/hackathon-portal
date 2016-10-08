@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008055728) do
+ActiveRecord::Schema.define(version: 20161008074059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "sponsor_tasks", force: :cascade do |t|
+    t.integer  "task_id"
+    t.integer  "sponsor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sponsor_id"], name: "index_sponsor_tasks_on_sponsor_id", using: :btree
+    t.index ["task_id"], name: "index_sponsor_tasks_on_task_id", using: :btree
+  end
 
   create_table "sponsors", force: :cascade do |t|
     t.string  "name",                                   null: false
@@ -23,6 +32,20 @@ ActiveRecord::Schema.define(version: 20161008055728) do
     t.string  "inactive_reason"
     t.integer "fiscal_year_start_month"
     t.text    "notes"
+  end
+
+  create_table "sponsors_tasks", id: false, force: :cascade do |t|
+    t.integer "sponsor_id"
+    t.integer "task_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "name",                        null: false
+    t.string   "description"
+    t.boolean  "copmleted",   default: false
+    t.string   "related_url"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,4 +60,6 @@ ActiveRecord::Schema.define(version: 20161008055728) do
     t.datetime "updated_at",                  null: false
   end
 
+  add_foreign_key "sponsor_tasks", "sponsors"
+  add_foreign_key "sponsor_tasks", "tasks"
 end
