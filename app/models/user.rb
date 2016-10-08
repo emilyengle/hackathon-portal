@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :sponsor_users, :dependent => :destroy
+  has_many :sponsors, :through => :sponsor_users
+
   validates :first_name, :presence => true
 
   validates :last_name, :presence => true
@@ -32,6 +35,8 @@ class User < ApplicationRecord
   validates :user_type, :presence => true
 
   before_validation :downcase_case_insensitive_attributes
+
+  enum user_type: [:hacker, :sponsor, :admin]
 
   private
   def downcase_case_insensitive_attributes

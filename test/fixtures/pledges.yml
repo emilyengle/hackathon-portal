@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level: 1
+  pledge_type: 1
+  amount_pledged: 1
+  amount_paid: 1
+  inkind_pledged: MyString
+  inkind_received: MyString
+  sponsor: one
+
+two:
+  level: 1
+  pledge_type: 1
+  amount_pledged: 1
+  amount_paid: 1
+  inkind_pledged: MyString
+  inkind_received: MyString
+  sponsor: two
