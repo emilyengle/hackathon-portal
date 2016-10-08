@@ -1,6 +1,6 @@
 class PledgesController < ApplicationController
   before_action :authenticate_user
-  before_action :authenticate_admin :except => [:index]
+  before_action :authenticate_admin, :except => [:index]
 
   def index
     @pledges = Pledge.all
@@ -52,7 +52,7 @@ class PledgesController < ApplicationController
 
   private 
   def create_params
-    params.require(:sponsor).permit(:level, :pledge_type, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received)
+    params.require(:pledge).permit(:level, :pledge_type, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received)
   end
   
   def update_params

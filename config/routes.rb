@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   resources :sponsors, :only => [:show] do
     resources :pledges, :except => [:show]
   end
+
+  resources :tasks
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008074059) do
+ActiveRecord::Schema.define(version: 20161008154920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20161008074059) do
   create_table "sponsor_tasks", force: :cascade do |t|
     t.integer  "task_id"
     t.integer  "sponsor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "completed",  default: false
     t.index ["sponsor_id"], name: "index_sponsor_tasks_on_sponsor_id", using: :btree
     t.index ["task_id"], name: "index_sponsor_tasks_on_task_id", using: :btree
   end
@@ -58,12 +59,11 @@ ActiveRecord::Schema.define(version: 20161008074059) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "name",                        null: false
+    t.string   "name",        null: false
     t.string   "description"
-    t.boolean  "copmleted",   default: false
     t.string   "related_url"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
