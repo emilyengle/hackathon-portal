@@ -7,9 +7,9 @@ class Sponsor < ApplicationRecord
   has_many :tasks, :through => :sponsor_tasks
   has_many :pledges, :dependent => :destroy
   has_many :contacts, -> { where(:role => :sponsor) }, :source => :user, :through => :sponsor_users
-
   validates :name, :presence => true
   validates :registration_password, :presence => true
+  accepts_nested_attributes_for :pledges, :allow_destroy => true
 
   def primary_assignee
   	su = self.sponsor_users.where(:role => SponsorUser.roles[:primary]).distinct.first

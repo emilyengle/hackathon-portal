@@ -1,0 +1,27 @@
+<fieldset>
+  <div class="form-group">
+    <%= f.label :level %><br>
+    <%= f.select :level, :collection => Pledge.levels.keys.to_a %>
+  </div>
+  <div class="form-group">
+    <%= f.label :amount_pledged %>
+    <%= f.text_field :amount_pledged, class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :amount_paid %>
+    <%= f.text_field :amount_paid, class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :inkind_pledged %>
+    <%= f.text_field :inkind_pledged, class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :inkind_received %>
+    <%= f.text_field :inkind_received, class: "form-control" %>
+  </div>
+  <%= f.hidden_field :_destroy %>
+
+  <div class="form-group">
+    <%= link_to "remove", '#', class: "remove_fields btn btn-danger" %>
+  </div> 
+</fieldset>

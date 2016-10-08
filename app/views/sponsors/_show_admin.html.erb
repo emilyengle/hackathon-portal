@@ -1,0 +1,46 @@
+
+
+<h1><%= @sponsor.name %> - Details</h1>
+<%= link_to("Make Changes", edit_sponsor_url(@sponsor), class: "btn btn-primary") %>
+<br><br>
+<div id="notes">
+	<p>
+		Notes: <%= @sponsor.notes %>
+	</p>
+</div>
+<div id="active">
+	<p>
+		Sponsor active: <%= @sponsor.active %>
+	</p>
+	<p>
+		Inactive Reason: <%= @sponsor.inactive_reason %>
+	</p>
+</div>
+
+<div id="month">
+	<p>
+		Fiscal Year Start Month: <%= @sponsor.fiscal_year_start_month %>
+	</p>
+</div>
+<div id="pledges">
+	<h4>Pledges</h4>
+  <table class="table table-striped">
+    <tr>
+      <th>Level</th>
+      <th>Amount Pledged</th>
+      <th>Amount Paid</th>
+      <th>In-Kind Pledged</th>
+      <th>In-Kind Received</th>
+    </tr>
+    <% Pledge.where(sponsor_id: @sponsor.id).each do |pledge| %>
+      <tr>
+        <td><%= pledge.level %></td>
+        <td><%= pledge.amount_pledged %></td>
+        <td><%= pledge.amount_paid %></td>
+        <td><%= pledge.inkind_pledged %></td>
+		<td><%= pledge.inkind_received %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
