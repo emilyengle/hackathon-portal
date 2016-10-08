@@ -1,6 +1,7 @@
 class SponsorsController < ApplicationController
-  before_action :authorize_user, :except => [:new, :create]
-  before_action :authorize_admin, :only => [:new, :create, :destroy]
+  before_action :authorize_user
+  before_action :authorize_admin, :only => [:create, :destroy]
+  before_action :verify_correct_user, :only => [:show, :edit, :update]
 
   def index
     @sponsors = Sponsor.all
@@ -15,15 +16,14 @@ class SponsorsController < ApplicationController
   end
 
   def create
-    @sponsor = Sponsor.new(params[:sponsor])
+    @sponsor = Sponsor.new(sponsor_params)
 
     respond_to do |format|
       if @sponsor.save
         format.html { redirect_to @sponsor, notice: 'Sponsor was successfully created.' }
         format.json { render json: @sponsor, status: :created, location: @sponsor }
       else
-        format.html { render action: "new" }
-        format.json { render json: @sponsor.errors, status: :unprocessable_entity }
+        render :new
       end
     end
 
@@ -34,6 +34,15 @@ class SponsorsController < ApplicationController
   end
 
   def update
+    @sponsor = Sponsor.find(params[:id])
+
+    if @sponsor.update_attributes(sponsor_params)
+      flash[:success] = "Sponsor successfully updated."
+      render :show
+    else
+      flash[:error] = "Unable to update sponsor."
+      render :edit
+    end
   end
 
   def destroy
@@ -50,6 +59,13 @@ class SponsorsController < ApplicationController
 
     def sponsor_params
       params.require(:sponsor, :registration_password, :name).permit(:logo, :active, :inactive_reason, :fiscal_year_start_month, :notes)
+    end
+
+    def verify_correct_user
+      unless current_user.username == params[:id] || current_user.admin?
+        flash[:error] = "You are not authorized to view this page."
+        redirect_to root_path
+      end
     end
 
 end
