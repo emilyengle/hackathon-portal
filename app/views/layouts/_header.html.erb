@@ -24,7 +24,7 @@
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
           <li>
-            <%= link_to("#{current_user.first_name}", current_user) %>
+            <%= link_to("#{current_user.first_name}", user_path(current_user.username)) %>
           </li>
           <li>
             <%= link_to('Edit Account', edit_user_path(current_user)) %>
