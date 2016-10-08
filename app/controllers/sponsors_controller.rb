@@ -1,6 +1,6 @@
 class SponsorsController < ApplicationController
   before_action :authorize_user
-  before_action :authorize_admin, :only => [:create, :destroy]
+  before_action :authorize_admin, :only => [:new, :create, :destroy]
   before_action :verify_correct_user, :only => [:show, :edit, :update]
 
   def index
@@ -58,7 +58,7 @@ class SponsorsController < ApplicationController
   private
 
     def sponsor_params
-      params.require(:sponsor, :registration_password, :name).permit(:logo, :active, :inactive_reason, :fiscal_year_start_month, :notes)
+      params.require(:sponsor).permit(:name, :logo, :active, :inactive_reason, :fiscal_year_start_month, :notes)
     end
 
     def verify_correct_user
