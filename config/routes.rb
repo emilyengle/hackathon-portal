@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :sponsors
+  root to: 'static_pages#index'
 
   get "/login" => "sessions#new"
   post "/login" => "sessions#create"
@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   resources :users
 
   resources :sponsors, :except => [:show]
-
   resources :sponsors, :only => [:show] do
     resources :pledges, :except => [:show]
   end
