@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008172859) do
+ActiveRecord::Schema.define(version: 20161008174720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20161008172859) do
     t.boolean "active",                  default: true
     t.string  "inactive_reason"
     t.integer "fiscal_year_start_month"
-    t.text    "notes"
+    t.text    "notes",                                  null: false
   end
 
   create_table "tasks", force: :cascade do |t|
