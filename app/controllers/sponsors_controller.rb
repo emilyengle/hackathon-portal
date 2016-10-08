@@ -1,5 +1,7 @@
 class SponsorsController < ApplicationController
-  
+  before_action :authorize_user, :except => [:new, :create]
+  before_action :authorize_admin, :only => [:new, :create, :destroy]
+
   def index
     @sponsors = Sponsor.all
   end
