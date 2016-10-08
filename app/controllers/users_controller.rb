@@ -21,6 +21,7 @@ class UsersController < ApplicationController
 
     if @user.save
       flash[:success] = "User successfully created."
+      session[:user_id] = @user.id
       render :show
     else
       flash[:error] = "User was not successfully created."
