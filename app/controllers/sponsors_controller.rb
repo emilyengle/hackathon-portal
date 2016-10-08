@@ -46,4 +46,10 @@ class SponsorsController < ApplicationController
     end
   end
 
+  private
+
+    def sponsor_params
+      params.require(:sponsor, :registration_password, :name).permit(:logo, :active, :inactive_reason, :fiscal_year_start_month, :notes)
+    end
+
 end
