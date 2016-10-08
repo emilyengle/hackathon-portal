@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
-  before_action :authenticate_user
-  before_action :authenticate_admin, :except => [:index]
+  before_action :authorize_user
+  before_action :authorize_admin, :except => [:index, :mark_complete]
 
   def index
     @tasks = Task.all
@@ -52,6 +52,12 @@ class TasksController < ApplicationController
       flash[:error] = "Task was not able to be deleted."
       render :index
     end 
+  end
+
+  def mark_complete
+    st = SponsorTask.where(sponsor: Sponsor.find(params[:sponsor_id]), task: Task.find(params[:id])).first
+    st.completed = params[:completed]
+    st.save
   end
 
   private 
