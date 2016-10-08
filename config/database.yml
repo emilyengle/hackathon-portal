@@ -6,8 +6,6 @@ default: &default
 development:
   <<: *default
   database: hackathon_portal_development
-  username: postgres
-  password: postgres
 
 test:
   <<: *default

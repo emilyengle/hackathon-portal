@@ -15,6 +15,19 @@ ActiveRecord::Schema.define(version: 20161008074059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "pledges", force: :cascade do |t|
+    t.integer  "level",                       null: false
+    t.integer  "pledge_type",     default: 0, null: false
+    t.integer  "amount_pledged"
+    t.integer  "amount_paid"
+    t.string   "inkind_pledged"
+    t.string   "inkind_received"
+    t.integer  "sponsor_id",                  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["sponsor_id"], name: "index_pledges_on_sponsor_id", using: :btree
+  end
+
   create_table "sponsor_tasks", force: :cascade do |t|
     t.integer  "task_id"
     t.integer  "sponsor_id"
@@ -22,6 +35,16 @@ ActiveRecord::Schema.define(version: 20161008074059) do
     t.datetime "updated_at", null: false
     t.index ["sponsor_id"], name: "index_sponsor_tasks_on_sponsor_id", using: :btree
     t.index ["task_id"], name: "index_sponsor_tasks_on_task_id", using: :btree
+  end
+
+  create_table "sponsor_users", force: :cascade do |t|
+    t.integer  "sponsor_id"
+    t.integer  "user_id"
+    t.integer  "role",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sponsor_id"], name: "index_sponsor_users_on_sponsor_id", using: :btree
+    t.index ["user_id"], name: "index_sponsor_users_on_user_id", using: :btree
   end
 
   create_table "sponsors", force: :cascade do |t|
@@ -32,11 +55,6 @@ ActiveRecord::Schema.define(version: 20161008074059) do
     t.string  "inactive_reason"
     t.integer "fiscal_year_start_month"
     t.text    "notes"
-  end
-
-  create_table "sponsors_tasks", id: false, force: :cascade do |t|
-    t.integer "sponsor_id"
-    t.integer "task_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -60,6 +78,9 @@ ActiveRecord::Schema.define(version: 20161008074059) do
     t.datetime "updated_at",                  null: false
   end
 
+  add_foreign_key "pledges", "sponsors"
   add_foreign_key "sponsor_tasks", "sponsors"
   add_foreign_key "sponsor_tasks", "tasks"
+  add_foreign_key "sponsor_users", "sponsors"
+  add_foreign_key "sponsor_users", "users"
 end
