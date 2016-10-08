@@ -60,6 +60,35 @@ class UsersController < ApplicationController
   end
 
   private
+  def create_params
+    params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :email,
+      :username,
+      :password,
+      :password_confirmation,
+      :phone_number
+    )
+  end
+
+  def update_params
+    if current_user.admin?
+      params.require(:user).permit(
+        :first_name,
+        :last_name,
+        :email,
+        :username,
+        :password,
+        :password_confirmation,
+        :phone_number,
+        :user_type
+      )
+    else
+      create_params
+    end
+  end
+
   def verify_correct_user
     unless current_user.username == params[:id] || current_user.admin?
       flash[:error] = "You are not authorized to view this page."
