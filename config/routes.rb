@@ -4,4 +4,10 @@ Rails.application.routes.draw do
   get "/logout" => "sessions#destroy"
 
   resources :users
+
+  resources :sponsors, :except => [:show]
+
+  resources :sponsors, :only => [:show] do
+    resources :pledges, :except => [:show]
+  end
 end
