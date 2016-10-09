@@ -25,6 +25,7 @@ class UsersController < ApplicationController
       render :show
     else
       flash[:error] = "User was not successfully created."
+      puts @user.errors[:phone_number]
       render :new
     end
   end
@@ -57,6 +58,21 @@ class UsersController < ApplicationController
     else
       flash[:error] = "User was not successfully destroyed."
       render :show
+    end
+  end
+
+  def make_admin
+    user = User.find_by_username params[:id]
+    not_found if user.nil?
+
+    user.user_type = User.user_types[:admin]
+
+    if user.save(:validate => false)
+      flash[:success] = "User was made an admin."
+      redirect_to users_path
+    else
+      flash[:error] = "User not able to be made an admin."
+      redirect_to users_path
     end
   end
 
