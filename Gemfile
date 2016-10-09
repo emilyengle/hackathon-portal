@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-sass'
 gem 'simple_form'
+gem 'font-awesome-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
