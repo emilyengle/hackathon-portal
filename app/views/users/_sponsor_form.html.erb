@@ -1,0 +1,28 @@
+<%= form_for(@user, :url => sponsor_users_path(params[:sponsor_id]), :html => { :class => "form-horizontal" }) do |f| %>
+  <div class="form-group">
+    <%= f.text_field :first_name, :placeholder => "First Name", class: "form-control", required: true, autofocus: true  %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :last_name, :placeholder => "Last Name", class: "form-control", required: true  %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :email, :placeholder => "Email Address", class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :username, :placeholder => "Username", class: "form-control", required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.password_field :password, :placeholder => "Password", class: "form-control", required: true  %>
+  </div>
+  <div class="form-group">
+    <%= f.password_field :password_confirmation, :placeholder => "Password Confirmation", class: "form-control", required: true  %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :phone_number, :placeholder => "Phone Number", class: "form-control"  %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :registration_password, :placeholder => "Registration Password", class: "form-control", required: true  %>
+  </div>
+
+  <%= f.submit 'Sign Up', class: "btn btn-default" %>
+<% end %>

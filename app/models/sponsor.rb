@@ -30,9 +30,9 @@ class Sponsor < ApplicationRecord
   end
 
   def primary_assignee=(username)
-  	current = primary_assignee
+	current = self.primary_assignee
 
-  	if current
+	unless current.nil?
   		SponsorUser.where(sponsor: self, user: current, role: SponsorUser.roles[:primary]).distinct.first.destroy
   	end
 
@@ -45,9 +45,9 @@ class Sponsor < ApplicationRecord
   end
 
   def secondary_assignee=(username)
-  	current = secondary_assignee
+	current = self.secondary_assignee
 
-  	if current
+	unless current.nil?
   		SponsorUser.where(sponsor: self, user: current, role: SponsorUser.roles[:secondary]).distinct.first.destroy
   	end
 

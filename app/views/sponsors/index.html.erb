@@ -4,9 +4,19 @@
 
 
 <div style="margin-top:10px; margin-bottom: 20px;">
-  <%= form_tag do %>
-    <%= select_tag :level, options_for_select(Pledge.levels.keys.to_a), :include_blank => true %>
-    <%= select_tag :status, options_for_select([["Active",true],["Inactive",false]]), :include_blank => true %>
+  <%= form_tag filter_sponsors_path, class: "form-inline", style: "margin-bottom: 10px;" do %>
+    <div class="form-group">
+      <%= label_tag "Sponsor Level: " %>
+      <%= select_tag :level, options_for_select(Pledge.levels.keys.to_a), :include_blank => true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Status: " %>
+      <%= select_tag :active, options_for_select([["Active",true],["Inactive",false]]), :include_blank => true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "Need to complete: " %>
+      <%= select_tag :task, options_for_select(Task.all.sort_by { |task| task.name }.collect { |task| [task.name, task.id] }), :include_blank => true, class: "form-control" %>
+    </div>
     <%= submit_tag "Filter", class: "btn btn-primary" %>
   <% end %>
 </div>
@@ -29,13 +39,13 @@
           <td><%= sponsor.primary_assignee.full_name %></td>
         <% else %>
           <td><None>
-        <% end %>        
+        <% end %>
         <% if sponsor.logo != nil %>
           <td><a href="<%= sponsor.logo %>">Yes</a></td>
         <% else %>
           <td>No</td>
         <td><%= sponsor.fiscal_year_start_month %></td>
-        <td><%= sponsor.notes %></td>        
+        <td><%= sponsor.notes %></td>
 		<% end %>
       </tr>
     <% end %>

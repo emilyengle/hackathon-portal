@@ -57,6 +57,33 @@ class SponsorsController < ApplicationController
     end
   end
 
+  def filter
+    @sponsors = Sponsor.all
+
+    puts params[:level].empty?
+    puts params[:active].empty?
+    puts params[:task].empty?
+
+    unless params[:level].empty?
+      @sponsors = @sponsors.select do |s|
+        if !s.pledges.first.nil? && !params[:level].empty?
+          s.pledges.first.level == params[:level]
+        else
+          false
+        end
+      end
+    end
+
+    unless params[:active].empty?
+      @sponsors = @sponsors.select { |s| s.active?.to_s == params[:active] }
+    end
+
+    unless params[:task].empty?
+      @sponsors = @sponsors.select { |s| !s.sponsor_tasks.where(completed: false, task: params[:task]).first.nil? }
+    end
+
+    render :index
+  end
 
   private
   def sponsor_params
