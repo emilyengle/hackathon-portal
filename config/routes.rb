@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         delete :remove_from_sponsor
       end
     end
+    resources :users, :only => [:new, :create]
   end
   get "/users/:id/edit" => "users#edit"
 

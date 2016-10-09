@@ -19,13 +19,34 @@ class UsersController < ApplicationController
   def create
     @user = User.new create_params
 
-    if @user.save
-      flash[:success] = "User successfully created."
-      session[:user_id] = @user.id
-      render :show
+    if params[:sponsor_id]
+      sponsor = Sponsor.find params[:sponsor_id]
+
+      if params[:user][:registration_password] == sponsor.registration_password
+        @user.user_type = :sponsor
+
+        if @user.save
+          flash[:success] = "User successfully created."
+          session[:user_id] = @user.id
+          sponsor.add_contact @user.username
+          redirect_to sponsor_path(sponsor)
+        else
+          flash[:error] = "User was not successfully created."
+          render :new
+        end
+      else
+        flash[:error] = "Incorrect registration password."
+        render :new
+      end
     else
-      flash[:error] = "User was not successfully created."
-      render :new
+      if @user.save
+        flash[:success] = "User successfully created."
+        session[:user_id] = @user.id
+        render :show
+      else
+        flash[:error] = "User was not successfully created."
+        render :new
+      end
     end
   end
 
@@ -84,7 +105,8 @@ class UsersController < ApplicationController
       :username,
       :password,
       :password_confirmation,
-      :phone_number
+      :phone_number,
+      :registration_password
     )
   end
 
