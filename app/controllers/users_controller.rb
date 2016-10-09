@@ -25,7 +25,6 @@ class UsersController < ApplicationController
       render :show
     else
       flash[:error] = "User was not successfully created."
-      puts @user.errors[:phone_number]
       render :new
     end
   end
