@@ -1,7 +1,8 @@
-<h1>Sponsors</h1>
-<%= link_to("Add New" , new_sponsor_path, class: "btn btn-primary") %>
+<h1 class="pull-left">Sponsors</h1>
+<%= link_to("Add New" , new_sponsor_path, class: "btn btn-primary pull-right", style: "margin-top: 25px;") %>
 
-<br/><br/>
+<div style="clear:both;"></div>
+
 
 <%= form_tag do %>
   <%= select_tag :level, options_for_select(Pledge.levels.keys.to_a), :include_blank => true %>
@@ -22,7 +23,7 @@
     <% @sponsors.each do |sponsor| %>
       <tr>
         <td><%= link_to(sponsor.name, sponsor_path(sponsor)) %></td>
-        <td><%= sponsor.active %></td>
+        <td><% if sponsor.active %><i class="fa fa-check" aria-hidden="true"></i><% else %><i class="fa fa-times" aria-hidden="true"></i><% end %></td>
         <% if sponsor.primary_assignee != nil %>
           <td><%= sponsor.primary_assignee.full_name %></td>
         <% else %>

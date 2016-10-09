@@ -1,3 +1,4 @@
+<h1 style="margin-bottom: 20px;">Add A Sponsor</h1>
 <%= form_for(@sponsor, :html => { :class => "form-horizontal" }) do |f| %>
   <div class="form-group">
     <%= f.text_field :name, :placeholder => "Sponsor", class: "form-control", required: true, autofocus: true  %>
@@ -16,6 +17,11 @@
   <div class="form-group">
     <%= f.number_field :fiscal_year_start_month, :placeholder => "Fiscal Year Start Month", class: "form-control"  %>
   </div>
+  <div class="form-group">
+    <%= f.label :primary_assignee %>
+    <%= f.select :primary_assignee, :collection => User.where(user_type: :admin).map { |n| n.first_name }, class: "form-control" %>
+  </div>
+
 <div class="form-group">
   <%= f.submit 'Sign Up', class: "btn btn-default" %>
   </div>
