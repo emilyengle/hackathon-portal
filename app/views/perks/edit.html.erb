@@ -1,2 +1,16 @@
-<h1>Perks#edit</h1>
-<p>Find me in app/views/perks/edit.html.erb</p>
+<h1>Edit <%= @perk.name %></h1>
+
+<%= form_for(@perk, :html => { :class => "form-horizontal" }) do |f| %>
+  <div class="form-group">
+    <%= f.text_field :name, class: "form-control", required: true, autofocus: true  %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :description, class: "form-control", required: true  %>
+  </div>
+  <div class="form-group">
+    <%= f.label "Level: " %>
+    <%= f.select :level, Perk.levels.keys.to_a.collect { |key| [key.titleize, key] }, {}, { :class => "form-control" } %>
+  </div>
+
+  <%= f.submit 'Update Perk', class: "btn btn-default" %>
+<% end %>
