@@ -1,24 +1,39 @@
-<h1>Sponsors</h1><%= link_to("Add Sponsor" , new_sponsor_path, class: "btn btn-primary") %>
+<h1>Sponsors</h1>
+<%= link_to("Add New" , new_sponsor_path, class: "btn btn-primary") %>
 
+<br/><br/>
 
+<%= form_tag do %>
+  <%= select_tag :level, options_for_select(Pledge.levels.keys.to_a), :include_blank => true %>
+  <%= select_tag :status, options_for_select([["Active",true],["Inactive",false]]), :include_blank => true %>
+  <%= submit_tag "Filter" %>
+<% end %>
+
+<br/> <br/>
   <table class="table table-striped">
     <tr>
       <th>Name</th>
-      <th>Fiscal Month</th>
       <th>Active</th>
-      <th>Notes</th>
+      <th>Primary Assignee</th>
       <th>Logo Uploaded?</th>
+      <th>FY Start Month</th>
+      <th>Notes</th>
     </tr>
     <% @sponsors.each do |sponsor| %>
       <tr>
         <td><%= link_to(sponsor.name, sponsor_path(sponsor)) %></td>
-        <td><%= sponsor.fiscal_year_start_month %></td>
         <td><%= sponsor.active %></td>
-        <td><%= sponsor.notes %></td>
-        <% if sponsor.logo != nil %>
-        	<td><a href="<%= sponsor.logo %>">Yes</a></td>
+        <% if sponsor.primary_assignee != nil %>
+          <td><%= sponsor.primary_assignee.full_name %></td>
         <% else %>
-        	<td>No</td>
+          <td><None>
+        <% end %>        
+        <% if sponsor.logo != nil %>
+          <td><a href="<%= sponsor.logo %>">Yes</a></td>
+        <% else %>
+          <td>No</td>
+        <td><%= sponsor.fiscal_year_start_month %></td>
+        <td><%= sponsor.notes %></td>        
 		<% end %>
       </tr>
     <% end %>
