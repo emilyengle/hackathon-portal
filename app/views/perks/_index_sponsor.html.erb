@@ -1,16 +1,18 @@
 <h1>Perks for <%= Sponsor.find(params[:sponsor_id]).name %></h1>
 
-<%= form_tag add_to_sponsor_sponsor_perks_path(params[:sponsor_id]), class: "form-inline", style: "margin-bottom: 10px;" do %>
-  <div class="form-group">
-    <%= label_tag :perk, "Perk: " %>
-    <%=
-      select_tag :perk,
-      options_for_select(Perk.all.reject { |perk| @perks.include?(perk) }.sort_by { |perk| Perk.levels[perk.level] }.collect { |perk| ["#{perk.name} | #{perk.level.titleize}", perk.id] }),
-      :include_blank => true,
-      :class => "form-control"
-    %>
-    <%= submit_tag "Add Perk", :class => "form-control" %>
-  </div>
+<% if current_user.admin? %>
+  <%= form_tag add_to_sponsor_sponsor_perks_path(params[:sponsor_id]), class: "form-inline", style: "margin-bottom: 10px;" do %>
+    <div class="form-group">
+      <%= label_tag :perk, "Perk: " %>
+      <%=
+        select_tag :perk,
+        options_for_select(Perk.all.reject { |perk| @perks.include?(perk) }.sort_by { |perk| Perk.levels[perk.level] }.collect { |perk| ["#{perk.name} | #{perk.level.titleize}", perk.id] }),
+        :include_blank => true,
+        :class => "form-control"
+      %>
+      <%= submit_tag "Add Perk", :class => "form-control" %>
+    </div>
+  <% end %>
 <% end %>
 
 <table class="table table-striped">
@@ -22,7 +24,7 @@
       <th>Remove</th>
     <% end %>
   </tr>
-  <% @perks.each do |perk| %>
+  <% @perks.sort_by { |perk| Perk.levels[perk.level] }.each do |perk| %>
     <tr>
       <td><%= link_to perk.name, edit_perk_path(perk) %></td>
       <td><%= perk.description %></td>

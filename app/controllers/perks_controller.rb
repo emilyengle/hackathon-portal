@@ -1,7 +1,8 @@
 class PerksController < ApplicationController
   before_action :determine_scope, :only => [:index]
   before_action :authorize_user
-  before_action :authorize_admin
+  before_action :authorize_admin, :except => [:index]
+  before_action :verify_correct_user, :only => [:index]
 
   def index
     @perks = @scope.all
@@ -16,7 +17,7 @@ class PerksController < ApplicationController
 
     if @perk.save
       flash[:success] = "Perk was successfully created."
-      redirect_to :index
+      redirect_to perks_path
     else
       flash[:error] = "Perk was not created."
       render :new
@@ -32,7 +33,7 @@ class PerksController < ApplicationController
 
     if @perk.update_attributes update_params
       flash[:success] = "Perk was successfully updated."
-      redirect_to :index
+      redirect_to perks_path
     else
       flash[:error] = "Perk was not updated."
       render :edit
@@ -44,10 +45,10 @@ class PerksController < ApplicationController
 
     if perk.destroy
       flash[:success] = "Perk was successfully destroyed."
-      redirect_to :index
+      redirect_to perks_path
     else
       flash[:error] = "Perk was not destroyed."
-      redirect_to :index
+      redirect_to perks_path
     end
   end
 
@@ -74,6 +75,14 @@ class PerksController < ApplicationController
   end
 
   private
+  def create_params
+    params.require(:perk).permit(:name, :description, :level)
+  end
+
+  def update_params
+    create_params
+  end
+
   def determine_scope
     @scope = Perk
 
@@ -84,6 +93,17 @@ class PerksController < ApplicationController
         @scope = Perk.none
       else
         @scope = pledge.perks
+      end
+    end
+  end
+
+  def verify_correct_user
+    if params[:id]
+      sponsor = Sponsor.find params[:id]
+
+      unless current_user.admin? || sponsor.contacts.include?(current_user)
+        flash[:error] = "You are not authorized to view this page."
+        redirect_to root_path
       end
     end
   end
