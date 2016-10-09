@@ -64,6 +64,15 @@ class PerksController < ApplicationController
     end
   end
 
+  def add_to_sponsor
+    perk = Perk.find params[:perk]
+    sponsor = Sponsor.find params[:sponsor_id]
+    pledge = sponsor.pledges.first
+
+    pledge.perks << perk
+    redirect_to sponsor_perks_path(params[:sponsor_id])
+  end
+
   private
   def determine_scope
     @scope = Perk

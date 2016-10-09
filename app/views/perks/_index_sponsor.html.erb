@@ -1,6 +1,6 @@
 <h1>Perks for <%= Sponsor.find(params[:sponsor_id]).name %></h1>
 
-<%= form_tag nil, class: "form-inline", style: "margin-bottom: 10px;" do %>
+<%= form_tag add_to_sponsor_sponsor_perks_path(params[:sponsor_id]), class: "form-inline", style: "margin-bottom: 10px;" do %>
   <div class="form-group">
     <%= label_tag :perk, "Perk: " %>
     <%=

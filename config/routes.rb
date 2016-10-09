@@ -19,7 +19,10 @@ Rails.application.routes.draw do
         patch :mark_complete
       end
     end
-    resources :perks, :only => [:index, :destroy] do
+    resources :perks, :only => [:index] do
+      collection do
+        post :add_to_sponsor
+      end
       member do
         delete :remove_from_sponsor
       end
