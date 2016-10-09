@@ -1,6 +1,6 @@
 class SponsorsController < ApplicationController
   before_action :authorize_user
-  before_action :authorize_admin, :only => [:new, :create, :destroy]
+  before_action :authorize_admin, :only => [:index, :new, :create, :destroy]
   before_action :verify_correct_user, :only => [:show, :edit, :update]
 
   def index
@@ -57,17 +57,17 @@ class SponsorsController < ApplicationController
     end
   end
 
+
   private
+  def sponsor_params
+    params.require(:sponsor).permit(:name, :logo, :active, :inactive_reason, :fiscal_year_start_month, :notes, :pledges, {pledges_attributes: [ :id, :level, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received, :_destroy] })
+  end
 
-    def sponsor_params
-      params.require(:sponsor).permit(:name, :logo, :active, :inactive_reason, :fiscal_year_start_month, :notes, :pledges, {pledges_attributes: [ :id, :level, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received, :_destroy] })
+  def verify_correct_user
+    puts @sponsor.contacts
+    unless current_user.admin? || @sponsor.contacts.includes?(current_user)
+      flash[:error] = "You are not authorized to view this page."
+      redirect_to root_path
     end
-
-    def verify_correct_user
-      unless current_user.username == params[:id] || current_user.admin?
-        flash[:error] = "You are not authorized to view this page."
-        redirect_to root_path
-      end
-    end
-
+  end
 end
