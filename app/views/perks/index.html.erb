@@ -1,0 +1,5 @@
+<% if params[:sponsor_id] %>
+  <%= render :partial => "index_sponsor" %>
+<% else %>
+  <%= render :partial => "index_default" %>
+<% end %>

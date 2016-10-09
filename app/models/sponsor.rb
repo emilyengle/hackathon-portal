@@ -3,7 +3,7 @@ class Sponsor < ApplicationRecord
   before_validation :set_registration_password, :on => :create
 
 	has_many :sponsor_users
-  has_many :sponsor_tasks
+  has_many :sponsor_tasks, :dependent => :destroy
   has_many :tasks, :through => :sponsor_tasks
   has_many :pledges, :dependent => :destroy
   has_many :contacts, -> { where(:role => :sponsor) }, :source => :user, :through => :sponsor_users
@@ -51,7 +51,7 @@ class Sponsor < ApplicationRecord
     end
   end
 
-  private 
+  private
 	def set_registration_password
 		self.registration_password = SecureRandom.hex(20)
 	end

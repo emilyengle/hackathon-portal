@@ -1,5 +1,5 @@
 class Perk < ApplicationRecord
-  has_many :perk_pledges
+  has_many :perk_pledges, :dependent => :destroy
   has_many :pledges, :through => :perk_pledges
 
   validates :level, :presence => true

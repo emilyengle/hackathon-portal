@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   root to: 'static_pages#index'
   get "/general_info" => "static_pages#general_info"
 
@@ -15,13 +14,19 @@ Rails.application.routes.draw do
 
   resources :sponsors, :except => [:show]
   resources :sponsors, :only => [:show] do
-    resources :pledges, :except => [:show]
     resources :tasks, :only => [:show] do
       member do
         patch :mark_complete
       end
     end
+    resources :perks, :only => [:index, :destroy] do
+      member do
+        delete :remove_from_sponsor
+      end
+    end
   end
+
+  resources :perks, :except => [:show]
 
   resources :tasks
 end
