@@ -19,6 +19,16 @@
       <%= f.number_field :fiscal_year_start_month, :placeholder => "Fiscal Year Start Month", class: "form-control"  %>
     </div>
 
+      <div class="form-group" style="width:50%;">
+    <%= f.label :primary_assignee %>
+    <%= f.select :primary_assignee, User.where(user_type: :admin).collect { |n| ["#{n.first_name} | #{n.username}", n.username] }, {}, { :class => "form-control" } %>
+  </div>
+
+  <div class="form-group" style="width:50%;">
+    <%= f.label :secondary_assignee %>
+    <%= f.select :secondary_assignee, User.where(user_type: :admin).collect { |n| ["#{n.first_name} | #{n.username}", n.username] }, {}, { :class => "form-control" } %>
+  </div>
+
     <%= f.fields_for :pledges do |builder| %>
       <%= render 'pledge_fields', f: builder %>
     <% end %>
