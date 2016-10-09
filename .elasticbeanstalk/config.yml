@@ -1,0 +1,11 @@
+branch-defaults:
+  master:
+    environment: hackathon-portal
+    group_suffix: null
+global:
+  application_name: hackathon-portal
+  default_ec2_keyname: kylethompson
+  default_platform: Ruby 2.3 (Puma)
+  default_region: us-east-1
+  profile: eb-cli
+  sc: git

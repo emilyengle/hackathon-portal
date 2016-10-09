@@ -1,5 +1,7 @@
 <h1 class="pull-left"><%= @sponsor.name %> - Details <% if @sponsor.active %><i class="fa fa-check" aria-hidden="true"></i><% else %><i class="fa fa-times" aria-hidden="true"></i><% end %></h1>
 <%= link_to("Make Changes", edit_sponsor_url(@sponsor), class: "btn btn-primary pull-right", style: "margin-top:25px;") %>
+<%= link_to("View Perks", sponsor_perks_path(@sponsor), class: "btn btn-primary pull-right", style: "margin-top:25px;margin-right:5px;") %>
+<%= link_to("View Tasks", sponsor_tasks_path(@sponsor), class: "btn btn-primary pull-right", style: "margin-top:25px;margin-right:5px;") %>
 <br><br>
 <div style="clear:both;"></div>
 <div id="notes">

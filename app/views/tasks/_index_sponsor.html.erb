@@ -1,0 +1,35 @@
+<h1>Tasks for <%= Sponsor.find(params[:sponsor_id]).name %></h1>
+
+<% if current_user.admin? %>
+  <%= form_tag add_to_sponsor_sponsor_tasks_path(params[:sponsor_id]), class: "form-inline", style: "margin-bottom: 10px;" do %>
+    <div class="form-group">
+      <%= label_tag :task, "Task: " %>
+      <%=
+        select_tag :task,
+        options_for_select(Task.all.reject { |task| @tasks.include?(task) }.collect { |task| [task.name, task.id] }),
+        :include_blank => true,
+        :class => "form-control"
+      %>
+      <%= submit_tag "Add Task", :class => "form-control" %>
+    </div>
+  <% end %>
+<% end %>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <% if current_user.admin? %>
+      <th>Remove</th>
+    <% end %>
+  </tr>
+  <% @tasks.each do |task| %>
+    <tr>
+      <td><%= link_to task.name, edit_task_path(task) %></td>
+      <td><%= task.description %></td>
+      <% if current_user.admin? %>
+        <td><%= link_to "Remove", remove_from_sponsor_sponsor_task_path(params[:sponsor_id], task), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-default" %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

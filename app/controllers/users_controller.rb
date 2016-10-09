@@ -74,6 +74,7 @@ class UsersController < ApplicationController
 
     if @user.destroy
       flash[:success] = "User successfully destroyed."
+      session[:user_id] = nil
       redirect_to root_path
     else
       flash[:error] = "User was not successfully destroyed."

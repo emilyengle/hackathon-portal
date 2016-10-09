@@ -1,0 +1,18 @@
+<h1>Tasks</h1>
+
+<%= link_to "Create a new Task", new_task_path %>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Destroy</th>
+  </tr>
+  <% @tasks.each do |task| %>
+    <tr>
+      <td><%= link_to task.name, edit_task_path(task) %></td>
+      <td><%= task.description %></td>
+      <td><%= link_to "Destroy", task_path(task), :method => :delete, :confirm => "Are you sure?", :class => "btn btn-default" %></td>
+    </tr>
+  <% end %>
+</table>
