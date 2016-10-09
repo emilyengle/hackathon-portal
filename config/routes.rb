@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   post "/login" => "sessions#create"
   delete "/logout" => "sessions#destroy"
 
-  resources :users
+  resources :users do
+    member do
+      patch :make_admin
+    end
+  end
 
   resources :sponsors, :except => [:show]
   resources :sponsors, :only => [:show] do

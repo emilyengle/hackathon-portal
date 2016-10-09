@@ -60,6 +60,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def make_admin
+    user = User.find_by_username params[:id]
+    not_found if user.nil?
+
+    user.user_type = User.user_types[:admin]
+
+    if user.save(:validate => false)
+      flash[:success] = "User was made an admin."
+      redirect_to users_path
+    else
+      flash[:error] = "User not able to be made an admin."
+      redirect_to users_path
+    end
+  end
+
   private
   def create_params
     params.require(:user).permit(
