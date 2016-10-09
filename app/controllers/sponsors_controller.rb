@@ -64,7 +64,6 @@ class SponsorsController < ApplicationController
   end
 
   def verify_correct_user
-    puts @sponsor.contacts
     unless current_user.admin? || @sponsor.contacts.includes?(current_user)
       flash[:error] = "You are not authorized to view this page."
       redirect_to root_path
