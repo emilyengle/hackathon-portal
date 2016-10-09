@@ -28,7 +28,7 @@ class User < ApplicationRecord
   validates :password_confirmation, :presence => true
 
   validates :phone_number, :format => {
-    :with => /\A[0-9]{10}\z/,
+    :with => /\A(?:[0-9]{10}|^(?!\s\S))\z/,
     :message => "must be exactly 10 digits"
   }
 
@@ -36,7 +36,11 @@ class User < ApplicationRecord
 
   before_validation :downcase_case_insensitive_attributes
 
-  enum user_type: [:hacker, :sponsor, :admin]
+  enum user_type: [:hacker, :sponsor, :admin] 
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
 
   private
   def downcase_case_insensitive_attributes

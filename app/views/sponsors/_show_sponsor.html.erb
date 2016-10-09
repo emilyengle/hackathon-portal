@@ -1,0 +1,31 @@
+<%= @sponsor.name %>: <%= @sponsor.pledges.first.level.titleize %> Level Sponsor
+<br />
+Point of Contact: <%= @sponsor.primary_assignee.full_name %> / <%= @sponsor.primary_assignee.email %>
+<br /><br />
+<%= link_to "Your Perks", root_path, class: "btn btn-default" %>
+<br /><br />
+<%= link_to "General Info", general_info_path, class: "btn btn-default" %>
+<br /><br />
+Your To-Do's
+<br /><br />
+<% @sponsor.sponsor_tasks.each do |st| %>
+  <label>
+		<%=
+  		check_box_tag 'completed', true, st.completed,
+    		onchange: "$(this).data('params', 'completed=' + this.checked)",
+        data: { remote: true, url: mark_complete_sponsor_task_path(st.sponsor, st.task), method: :patch }
+		%>
+		<%= st.task.name %>
+	</label>
+<% end %>
+<br/><br/>
+
+<div class="row">
+	<div class="col-md-3">
+		<a href="http://go.osu.edu/mentorOHIO2016" target="_blank" class="btn btn-default">Mentors</a> 
+	</div>
+	<div class="col-md-3">
+		<a href="http://go.osu.edu/judgeOHIO2016" target="_blank" class="btn btn-default">Judges</a>
+	</div>
+</div>
+
