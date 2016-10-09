@@ -1,22 +1,19 @@
-
-
-<h1><%= @sponsor.name %> - Details</h1>
-<%= link_to("Make Changes", edit_sponsor_url(@sponsor), class: "btn btn-primary") %>
+<h1 class="pull-left"><%= @sponsor.name %> - Details <% if @sponsor.active %><i class="fa fa-check" aria-hidden="true"></i><% else %><i class="fa fa-times" aria-hidden="true"></i><% end %></h1>
+<%= link_to("Make Changes", edit_sponsor_url(@sponsor), class: "btn btn-primary pull-right", style: "margin-top:25px;") %>
 <br><br>
+<div style="clear:both;"></div>
 <div id="notes">
-	<p>
+	<h4>
 		Notes: <%= @sponsor.notes %>
-	</p>
+	</h4>
 </div>
+<% if !@sponsor.active %>
 <div id="active">
 	<p>
-		Sponsor active: <%= @sponsor.active %>
-	</p>
-	<p>
-		Inactive Reason: <%= @sponsor.inactive_reason %>
+		Reason for being inactive: <%= @sponsor.inactive_reason %>
 	</p>
 </div>
-
+<% end %>
 <div id="month">
 	<p>
 		Fiscal Year Start Month: <%= @sponsor.fiscal_year_start_month %>
@@ -31,6 +28,7 @@
       <th>Amount Paid</th>
       <th>In-Kind Pledged</th>
       <th>In-Kind Received</th>
+      <th>Contributing Year</th>
     </tr>
     <% Pledge.where(sponsor_id: @sponsor.id).each do |pledge| %>
       <tr>
@@ -39,6 +37,7 @@
         <td><%= pledge.amount_paid %></td>
         <td><%= pledge.inkind_pledged %></td>
 		<td><%= pledge.inkind_received %></td>
+    <td><%= pledge.created_at %></td>
       </tr>
     <% end %>
   </table>

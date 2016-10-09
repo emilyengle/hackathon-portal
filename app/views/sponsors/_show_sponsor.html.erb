@@ -29,3 +29,22 @@ Your To-Do's
 	</div>
 </div>
 
+          <div id="#logo" class="dashboard-component logo">
+            <h3>Current Logo:</h3>
+            <%= image_tag @sponsor.logo.url, class: "company-logo" %>
+            <% if @sponsor.logo_valid? %>
+            <div class="alert alert-success" role="alert">
+              <strong>Your logo is valid!</strong> If you've any questions, please reach out.
+            </div>
+            <% else %>
+            <div class="alert alert-danger" role="alert">
+              <strong>We're determined something's not quite right with your logo.</strong> If you've uploaded your logo, make sure it's in a vectorized format! If you have any questions, contact us.
+            </div>
+            <% end %>
+
+            <%= bootstrap_form_for @sponsor, url: sponsor_path(@sponsor) do |f| %>
+            <%= f.file_field :logo, as: :file %>
+            <%= f.submit "Upload Logo" %>
+            <% end %>
+          </div>
+
