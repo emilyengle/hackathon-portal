@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OHI/O Sponsor Portal</title>
+    <title>HackOHI/O Sponsor Portal</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application' %>
+
   </head>
 
   <body>
@@ -13,6 +14,9 @@
     <div class="container">
       <%= render :partial => "layouts/flashes" %>
       <%= yield %>
+    </div>
+    <h1>Sponsor Portal</h1>
+    <div id="city-footer">
     </div>
     <%= render :partial => "layouts/footer" %>
   </body>
