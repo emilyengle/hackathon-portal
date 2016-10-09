@@ -49,13 +49,23 @@ ActiveRecord::Schema.define(version: 20161009000307) do
   end
 
   create_table "sponsors", force: :cascade do |t|
-    t.string  "name",                                   null: false
+    t.string  "name",                                         null: false
     t.string  "logo"
-    t.string  "registration_password",                  null: false
-    t.boolean "active",                  default: true
+    t.string  "registration_password",                        null: false
+    t.boolean "active",                       default: true
     t.string  "inactive_reason"
     t.integer "fiscal_year_start_month"
-    t.text    "notes",                                  null: false
+    t.text    "notes",                                        null: false
+    t.string  "contact_first_name"
+    t.string  "contact_last_name"
+    t.string  "contact_email"
+    t.boolean "contact_information_received", default: false
+    t.text    "challenge"
+    t.boolean "challenge_received",           default: false
+    t.text    "prehype_event"
+    t.boolean "prehype_event_received",       default: false
+    t.text    "swag"
+    t.boolean "swag_received",                default: false
   end
 
   create_table "tasks", force: :cascade do |t|
