@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
   resources :sponsors, :except => [:show]
   resources :sponsors, :only => [:show] do
+    collection do
+      post :filter
+    end
     resources :tasks, :only => [:show] do
       member do
         patch :mark_complete
