@@ -1,9 +1,10 @@
+<h2 style="margin-bottom:20px;">Add A New Sponsor</h2>
 <%= form_for(@sponsor, :html => { :class => "form-horizontal" }) do |f| %>
   <div class="form-group">
-    <%= f.text_field :name, :placeholder => "Sponsor", class: "form-control", required: true, autofocus: true  %>
+    <%= f.text_field :name, :placeholder => "Sponsor Name", class: "form-control", required: true, autofocus: true  %>
   </div>
   <div class="form-group">
-    <%= f.text_area :notes, :placeholder => "Notes", class: "form-control", required: true  %>
+    <%= f.text_area :notes, :placeholder => "Notes on the Sponsor", class: "form-control", required: true  %>
   </div>
   <div class="form-group">
   	<label>
@@ -16,6 +17,17 @@
   <div class="form-group">
     <%= f.number_field :fiscal_year_start_month, :placeholder => "Fiscal Year Start Month", class: "form-control"  %>
   </div>
+
+  <div class="form-group">
+    <%= f.label :primary_assignee %>
+    <%= f.select :primary_assignee, User.where(user_type: :admin).collect { |n| ["#{n.first_name} | #{n.username}", n.username] }, {}, { :class => "form-control" } %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :secondary_assignee %>
+    <%= f.select :secondary_assignee, User.where(user_type: :admin).collect { |n| ["#{n.first_name} | #{n.username}", n.username] }, {}, { :class => "form-control" } %>
+  </div>
+
 <div class="form-group">
   <%= f.submit 'Sign Up', class: "btn btn-default" %>
   </div>

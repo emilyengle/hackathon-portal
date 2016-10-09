@@ -17,30 +17,38 @@ class Sponsor < ApplicationRecord
   end
 
   def secondary_assignee
-  	su = self.sponsor_users.where(:role => SponsorUser.roles[:secondary]).distinct.first.user
+  	su = self.sponsor_users.where(:role => SponsorUser.roles[:secondary]).distinct.first
   	su.user unless su.nil?
   end
 
-  def primary_assignee=(user)
+  def primary_assignee=(username)
   	current = primary_assignee
 
   	if current
   		SponsorUser.where(sponsor: self, user: current, role: SponsorUser.roles[:primary]).distinct.first.destroy
   	end
 
-		su = SponsorUser.new(sponsor: self, user: user, role: SponsorUser.roles[:primary])
-		su.save
+    user = User.find_by_username username
+
+    unless user.nil?
+  		su = SponsorUser.new(sponsor: self, user: user, role: SponsorUser.roles[:primary])
+	   	su.save
+    end
   end
 
-  def secondary_assignee=(user)
+  def secondary_assignee=(username)
   	current = secondary_assignee
 
   	if current
   		SponsorUser.where(sponsor: self, user: current, role: SponsorUser.roles[:secondary]).distinct.first.destroy
   	end
 
-		su = SponsorUser.new(sponsor: self, user: user, role: SponsorUser.roles[:secondary])
-		su.save
+		user = User.find_by_username username
+
+    unless user.nil?
+      su = SponsorUser.new(sponsor: self, user: user, role: SponsorUser.roles[:secondary])
+      su.save
+    end
   end
 
   private 

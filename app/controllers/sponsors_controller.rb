@@ -60,7 +60,7 @@ class SponsorsController < ApplicationController
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:name, :logo, :active, :inactive_reason, :fiscal_year_start_month, :notes, :pledges, {pledges_attributes: [ :id, :level, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received, :_destroy] })
+    params.require(:sponsor).permit(:name, :logo, :active, :inactive_reason, :fiscal_year_start_month, :notes, :pledges, :primary_assignee, :secondary_assignee, {pledges_attributes: [ :id, :level, :amount_pledged, :amount_paid, :inkind_pledged, :inkind_received, :_destroy] })
   end
 
   def verify_correct_user
