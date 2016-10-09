@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  get "/users/:id/edit" => "users#edit"
 
   resources :tasks
 end

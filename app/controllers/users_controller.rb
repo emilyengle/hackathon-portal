@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
     if @user.update_attributes update_params
       flash[:success] = "User successfully updated."
-      render :show
+      render :edit
     else
       flash[:error] = "Unable to update user."
       render :edit
