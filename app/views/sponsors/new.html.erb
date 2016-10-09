@@ -17,9 +17,15 @@
   <div class="form-group">
     <%= f.number_field :fiscal_year_start_month, :placeholder => "Fiscal Year Start Month", class: "form-control"  %>
   </div>
+
   <div class="form-group">
     <%= f.label :primary_assignee %>
-    <%= f.select :primary_assignee, :collection => User.where(user_type: :admin).map { |n| n.first_name }, class: "form-control" %>
+    <%= f.select :primary_assignee, User.where(user_type: :admin).collect { |n| ["#{n.first_name} | #{n.username}", n.username] }, {}, { :class => "form-control" } %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :secondary_assignee %>
+    <%= f.select :secondary_assignee, User.where(user_type: :admin).collect { |n| ["#{n.first_name} | #{n.username}", n.username] }, {}, { :class => "form-control" } %>
   </div>
 
 <div class="form-group">
