@@ -1,7 +1,7 @@
 class Pledge < ApplicationRecord
   belongs_to :sponsor
 
-  has_many :perk_pledges
+  has_many :perk_pledges, :dependent => :destroy
   has_many :perks, :through => :perk_pledges
 
   validates :level, :presence => true
