@@ -1,4 +1,13 @@
-<h1>Sponsors</h1><%= link_to("Add New" , new_sponsor_path, class: "btn btn-primary") %>
+<h1>Sponsors</h1>
+<%= link_to("Add New" , new_sponsor_path, class: "btn btn-primary") %>
+
+<br/><br/>
+
+<%= form_tag do %>
+  <%= select_tag :level, options_for_select(Pledge.levels.keys.to_a), :include_blank => true %>
+  <%= select_tag :status, options_for_select([["Active",true],["Inactive",false]]), :include_blank => true %>
+  <%= submit_tag "Filter" %>
+<% end %>
 
 <br/> <br/>
   <table class="table table-striped">
